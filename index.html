@@ -42,7 +42,14 @@
       cursor: pointer;
     }
 
-    span {
+    .result-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .result-label {
       font-weight: bold;
     }
   </style>
@@ -56,9 +63,9 @@
       var result2 = input2 * 2000;
       var result3 = input3 * 1000;
 
-      document.getElementById('output1').innerHTML = result1;
-      document.getElementById('output2').innerHTML = result2;
-      document.getElementById('output3').innerHTML = result3;
+      document.getElementById('result1').innerHTML = result1;
+      document.getElementById('result2').innerHTML = result2;
+      document.getElementById('result3').innerHTML = result3;
 
       var sum = result1 + result2 + result3;
       document.getElementById('outputSum').innerHTML = sum;
@@ -68,24 +75,36 @@
 <body>
   <div class="container">
     <h1>계산기</h1>
-    <label for="input1">첫 번째 입력:</label>
-    <input type="text" id="input1"><br>
-    <label for="input2">두 번째 입력:</label>
-    <input type="text" id="input2"><br>
-    <label for="input3">세 번째 입력:</label>
-    <input type="text" id="input3"><br>
+    <div class="result-container">
+      <div>
+        <label for="input1">첫 번째 입력:</label>
+        <input type="text" id="input1">
+      </div>
+      <div id="result1"></div>
+    </div>
 
-    <button onclick="calculate()">계산하기</button><br>
+    <div class="result-container">
+      <div>
+        <label for="input2">두 번째 입력:</label>
+        <input type="text" id="input2">
+      </div>
+      <div id="result2"></div>
+    </div>
 
-    <label for="output1">첫 번째 계산 결과:</label>
-    <span id="output1"></span><br>
-    <label for="output2">두 번째 계산 결과:</label>
-    <span id="output2"></span><br>
-    <label for="output3">세 번째 계산 결과:</label>
-    <span id="output3"></span><br>
+    <div class="result-container">
+      <div>
+        <label for="input3">세 번째 입력:</label>
+        <input type="text" id="input3">
+      </div>
+      <div id="result3"></div>
+    </div>
 
-    <label for="outputSum">합계:</label>
-    <span id="outputSum"></span>
+    <button onclick="calculate()">계산하기</button>
+
+    <div>
+      <label class="result-label">합계:</label>
+      <span id="outputSum"></span>
+    </div>
   </div>
 </body>
 </html>
