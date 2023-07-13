@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>계산기</title>
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      max-width: 500px;
+      width: 80%;
+      box-sizing: border-box;
+    }
+
+    label {
+      margin-bottom: 10px;
+    }
+
+    input {
+      margin-bottom: 15px;
+      padding: 5px;
+    }
+
+    button {
+      margin-bottom: 20px;
+      padding: 8px 16px;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    span {
+      font-weight: bold;
+    }
+  </style>
+  <script>
+    function calculate() {
+      var input1 = document.getElementById('input1').value;
+      var input2 = document.getElementById('input2').value;
+      var input3 = document.getElementById('input3').value;
+
+      var result1 = input1 * 4000;
+      var result2 = input2 * 2000;
+      var result3 = input3 * 1000;
+
+      document.getElementById('output1').innerHTML = result1;
+      document.getElementById('output2').innerHTML = result2;
+      document.getElementById('output3').innerHTML = result3;
+
+      var sum = result1 + result2 + result3;
+      document.getElementById('outputSum').innerHTML = sum;
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h1>계산기</h1>
+    <label for="input1">첫 번째 입력:</label>
+    <input type="text" id="input1"><br>
+    <label for="input2">두 번째 입력:</label>
+    <input type="text" id="input2"><br>
+    <label for="input3">세 번째 입력:</label>
+    <input type="text" id="input3"><br>
+
+    <button onclick="calculate()">계산하기</button><br>
+
+    <label for="output1">첫 번째 계산 결과:</label>
+    <span id="output1"></span><br>
+    <label for="output2">두 번째 계산 결과:</label>
+    <span id="output2"></span><br>
+    <label for="output3">세 번째 계산 결과:</label>
+    <span id="output3"></span><br>
+
+    <label for="outputSum">합계:</label>
+    <span id="outputSum"></span>
+  </div>
+</body>
+</html>
