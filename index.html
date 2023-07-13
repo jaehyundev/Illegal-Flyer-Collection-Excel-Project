@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>계산기</title>
+  <title>전단지 계산기</title>
   <style>
+    .outputSum{
+        font-size: 20px;
+        font-weight: bold;
+    }
     body {
       display: flex;
       align-items: center;
@@ -74,10 +78,10 @@
 </head>
 <body>
   <div class="container">
-    <h1>계산기</h1>
+    <h1>전단지 계산기</h1>
     <div class="result-container">
       <div>
-        <label for="input1">첫 번째 입력:</label>
+        <label for="input1">벽보A4초과(4000원)</label>
         <input type="text" id="input1">
       </div>
       <div id="result1"></div>
@@ -85,7 +89,7 @@
 
     <div class="result-container">
       <div>
-        <label for="input2">두 번째 입력:</label>
+        <label for="input2">벽보A4이하(2000원)</label>
         <input type="text" id="input2">
       </div>
       <div id="result2"></div>
@@ -93,7 +97,7 @@
 
     <div class="result-container">
       <div>
-        <label for="input3">세 번째 입력:</label>
+        <label for="input3">전단A4이하(1000원)</label>
         <input type="text" id="input3">
       </div>
       <div id="result3"></div>
