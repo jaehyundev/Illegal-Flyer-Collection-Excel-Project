@@ -3,90 +3,114 @@
 <head>
   <title>전단지 계산기</title>
   <style>
-
+    /* 전체 페이지 스타일 */
     body {
-      touch-action: manipulation;
-    }
-    .outputSum{
-        font-size: 20px;
-        font-weight: bold;
-    }
-    body {
+      font-family: Arial, sans-serif;
+      background-color: #333;
+      color: #fff;
+      margin: 0;
+      padding: 0;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       height: 100vh;
     }
 
+    /* 컨테이너 스타일 */
     .container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      border: 1px solid #ccc;
+      background-color: #444;
       border-radius: 8px;
-      max-width: 500px;
-      width: 80%;
-      box-sizing: border-box;
+      box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+      padding: 20px;
+      text-align: left;
     }
 
-    label {
-      margin-bottom: 10px;
-    }
-
+    /* 입력 박스 스타일 */
     input {
-      margin-bottom: 15px;
-      padding: 5px;
-    }
-
-    button {
-      margin-bottom: 20px;
-      padding: 8px 16px;
-      background-color: #4CAF50;
-      color: #fff;
-      border: none;
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #555;
       border-radius: 4px;
-      cursor: pointer;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      box-sizing: border-box;
+      background-color: #555;
+      color: #fff;
+      font-size: 12px;
     }
 
+    /* 결과 컨테이너 스타일 */
     .result-container {
       display: flex;
-      flex-direction: row;
       justify-content: space-between;
-      width: 100%;
+      margin-top: 15px;
+      align-items: center;
     }
 
+    /* 결과 라벨 스타일 */
     .result-label {
       font-weight: bold;
     }
+
+    /* 합계 스타일 */
+    .outputSum {
+      font-size: 20px;
+      font-weight: bold;
+      margin-top: 0;
+      text-align: right; /* 합계 맨 오른쪽 정렬 추가 */
+    }
+
+    /* 버튼 스타일 */
+    button {
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
   </style>
   <script>
-    function calculate() {
-      var input1 = document.getElementById('input1').value;
-      var input2 = document.getElementById('input2').value;
-      var input3 = document.getElementById('input3').value;
+    // 입력값이 변경될 때마다 동적으로 계산하도록 수정
+    function updateCalculations() {
+      var input1 = parseFloat(document.getElementById('input1').value) || 0;
+      var input2 = parseFloat(document.getElementById('input2').value) || 0;
+      var input3 = parseFloat(document.getElementById('input3').value) || 0;
 
       var result1 = input1 * 4000;
       var result2 = input2 * 2000;
       var result3 = input3 * 1000;
 
-      document.getElementById('result1').innerHTML = result1;
-      document.getElementById('result2').innerHTML = result2;
-      document.getElementById('result3').innerHTML = result3;
+      document.getElementById('result1').innerHTML = formatNumber(result1);
+      document.getElementById('result2').innerHTML = formatNumber(result2);
+      document.getElementById('result3').innerHTML = formatNumber(result3);
 
       var sum = result1 + result2 + result3;
-      document.getElementById('outputSum').innerHTML = sum;
+      document.getElementById('outputSum').innerHTML = formatNumber(sum);
+    }
+
+    // 초기화 버튼 기능 추가
+    function clearInputs() {
+      document.getElementById('input1').value = '';
+      document.getElementById('input2').value = '';
+      document.getElementById('input3').value = '';
+      updateCalculations();
+    }
+
+    // 숫자 포맷팅 함수
+    function formatNumber(number) {
+      return new Intl.NumberFormat().format(number);
     }
   </script>
 </head>
 <body>
   <div class="container">
-    <h1>전단지 계산기</h1>
+    <h1 style="text-align: center;">전단지 계산기</h1>
     <div class="result-container">
       <div>
         <label for="input1">벽보A4초과(4000원)</label>
-        <input type="text" id="input1">
+        <input type="text" id="input1" onkeyup="updateCalculations()">
       </div>
       <div id="result1"></div>
     </div>
@@ -94,7 +118,7 @@
     <div class="result-container">
       <div>
         <label for="input2">벽보A4이하(2000원)</label>
-        <input type="text" id="input2">
+        <input type="text" id="input2" onkeyup="updateCalculations()">
       </div>
       <div id="result2"></div>
     </div>
@@ -102,17 +126,17 @@
     <div class="result-container">
       <div>
         <label for="input3">전단A4이하(1000원)</label>
-        <input type="text" id="input3">
+        <input type="text" id="input3" onkeyup="updateCalculations()">
       </div>
       <div id="result3"></div>
     </div>
 
-    <button onclick="calculate()">계산하기</button>
-
     <div>
       <label class="result-label">합계:</label>
-      <span id="outputSum"></span>
+      <span class="outputSum" id="outputSum"></span>
     </div>
+
+    <button onclick="clearInputs()">초기화</button>
   </div>
 </body>
 </html>
