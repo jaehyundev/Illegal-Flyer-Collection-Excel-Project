@@ -27,7 +27,10 @@
       text-align: left;
     }
 
-    /* 입력 박스 스타일 */
+    label {
+      font-weight: bold;
+    }
+
     input {
       width: 100%;
       padding: 10px;
@@ -38,10 +41,8 @@
       box-sizing: border-box;
       background-color: #555;
       color: #fff;
-      font-size: 12px;
     }
 
-    /* 결과 컨테이너 스타일 */
     .result-container {
       display: flex;
       justify-content: space-between;
@@ -49,12 +50,6 @@
       align-items: center;
     }
 
-    /* 결과 라벨 스타일 */
-    .result-label {
-      font-weight: bold;
-    }
-
-    /* 합계 스타일 */
     .outputSum {
       font-size: 20px;
       font-weight: bold;
@@ -62,7 +57,6 @@
       text-align: right;
     }
 
-    /* 버튼 스타일 */
     button {
       background-color: #4caf50;
       color: white;
@@ -71,6 +65,27 @@
       padding: 10px 20px;
       cursor: pointer;
     }
+
+    button.secondary {
+      background-color: #777;
+    }
+
+    /* 다크모드 스타일 */
+    body.dark-mode {
+      background-color: #111;
+      color: #ddd;
+    }
+
+    .container.dark-mode {
+      background-color: #222;
+      box-shadow: 0px 2px 10px rgba(255, 255, 255, 0.1);
+    }
+
+    input.dark-mode {
+      border-color: #888;
+      background-color: #333;
+      color: #ddd;
+    }
   </style>
 </head>
 <body>
@@ -78,7 +93,7 @@
     <h1 style="text-align: center;">전단지 계산기</h1>
     <div class="result-container">
       <div>
-        <label for="input1">벽보A4초과(4000원)</label>
+        <label for="input1">벽보A4초과 (4000원)</label>
         <input type="text" id="input1" onkeyup="updateCalculations()">
       </div>
       <div id="result1"></div>
@@ -86,7 +101,7 @@
 
     <div class="result-container">
       <div>
-        <label for="input2">벽보A4이하(2000원)</label>
+        <label for="input2">벽보A4이하 (2000원)</label>
         <input type="text" id="input2" onkeyup="updateCalculations()">
       </div>
       <div id="result2"></div>
@@ -94,67 +109,74 @@
 
     <div class="result-container">
       <div>
-        <label for="input3">전단A4이하(1000원)</label>
+        <label for="input3">전단A4이하 (1000원)</label>
         <input type="text" id="input3" onkeyup="updateCalculations()">
       </div>
       <div id="result3"></div>
     </div>
 
-    <!-- 추가된 입력 필드 -->
     <div class="result-container">
       <div>
         <label for="name">이름:</label>
         <input type="text" id="name">
       </div>
     </div>
+
     <div class="result-container">
       <div>
         <label for="phone">전화번호:</label>
-        <input type="text" id="phone" value="010-">
+        <input type="text" id="phone" value="010">
       </div>
     </div>
+
     <div class="result-container">
       <div>
         <label for="birthdate">생년월일:</label>
         <input type="text" id="birthdate">
       </div>
     </div>
+
     <div class="result-container">
       <div>
         <label for="address">주소:</label>
-        <input type="text" id="address" value="성남시 중원구 ">
+        <input type="text" id="address" value="성남시 중원구 성남동">
+      </div>
+    </div>
+
+    <div class="result-container">
+      <div>
+        <label class="result-label">합계:</label>
+        <span class="outputSum" id="outputSum"></span>
       </div>
     </div>
 
     <div>
-      <label class="result-label">합계:</label>
-      <span class="outputSum" id="outputSum"></span>
+      <button onclick="clearInputs()" class="secondary">초기화</button>
+      <button onclick="submitData()">제출하기</button>
+      <button onclick="downloadCSV()">다운로드</button>
     </div>
-
-    <button onclick="clearInputs()">초기화</button>
-    <!-- 추가된 버튼 -->
-    <button onclick="submitData()">제출하기</button>
+    <p id="submitMessage" style="text-align: center; display: none;">제출완료</p>
   </div>
   <script>
-    // 입력값이 변경될 때마다 동적으로 계산하도록 수정
+    var savedData = [];
+
     function updateCalculations() {
       var input1 = parseFloat(document.getElementById('input1').value) || 0;
       var input2 = parseFloat(document.getElementById('input2').value) || 0;
       var input3 = parseFloat(document.getElementById('input3').value) || 0;
-  
+
       var result1 = input1 * 4000;
       var result2 = input2 * 2000;
       var result3 = input3 * 1000;
-  
+
       document.getElementById('result1').innerHTML = formatNumber(result1);
       document.getElementById('result2').innerHTML = formatNumber(result2);
       document.getElementById('result3').innerHTML = formatNumber(result3);
-  
+
       var sum = result1 + result2 + result3;
       document.getElementById('outputSum').innerHTML = formatNumber(sum);
     }
-  
-    // 초기화 버튼 기능 추가
+
     function clearInputs() {
       document.getElementById('input1').value = '';
       document.getElementById('input2').value = '';
@@ -165,45 +187,65 @@
       document.getElementById('address').value = '성남시 중원구 성남동 ';
       updateCalculations();
     }
-  
-    // 제출하기 버튼 기능 추가
+
+    function saveData() {
+      var input1 = parseFloat(document.getElementById('input1').value) || 0;
+      var input2 = parseFloat(document.getElementById('input2').value) || 0;
+      var input3 = parseFloat(document.getElementById('input3').value) || 0;
+      var name = document.getElementById('name').value;
+      var phone = document.getElementById('phone').value;
+      var birthdate = document.getElementById('birthdate').value;
+      var address = document.getElementById('address').value;
+
+      var result1 = input1 * 4000;
+      var result2 = input2 * 2000;
+      var result3 = input3 * 1000;
+
+      var sum = result1 + result2 + result3;
+
+      var entry = {
+        '이름': name,
+        '전화번호': phone,
+        '생년월일': birthdate,
+        '주소': address,
+        '벽보A4초과 (4000원)': input1,
+        '벽보A4이하 (2000원)': input2,
+        '전단A4이하 (1000원)': input3,
+        '총 가격': sum
+      };
+
+      savedData.push(entry);
+    }
+
+    function downloadCSV() {
+      var csvContent = "data:text/csv;charset=utf-8,\uFEFF";
+      csvContent += Object.keys(savedData[0]).join(",") + "\n";
+      savedData.forEach(function(entry) {
+        var row = Object.values(entry).map(function(value) {
+          return '"' + value + '"';
+        }).join(",");
+        csvContent += row + "\n";
+      });
+
+      var encodedUri = encodeURI(csvContent);
+      var link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", "전단지_계산결과.csv");
+      document.body.appendChild(link);
+      link.click();
+    }
+
     function submitData() {
-  var input1 = parseFloat(document.getElementById('input1').value) || 0;
-  var input2 = parseFloat(document.getElementById('input2').value) || 0;
-  var input3 = parseFloat(document.getElementById('input3').value) || 0;
-  var name = document.getElementById('name').value;
-  var phone = document.getElementById('phone').value;
-  var birthdate = document.getElementById('birthdate').value;
-  var address = document.getElementById('address').value;
+      saveData();
+      document.getElementById('submitMessage').style.display = 'block';
+      setTimeout(function() {
+        document.getElementById('submitMessage').style.display = 'none';
+      }, 1000);
+    }
 
-  var result1 = input1 * 4000;
-  var result2 = input2 * 2000;
-  var result3 = input3 * 1000;
-
-  var sum = result1 + result2 + result3;
-
-  var data = [
-    ['이름', '전화번호', '생년월일', '주소', '벽보A4초과(4000원)', '벽보A4이하(2000원)', '전단A4이하(1000원)', '총 가격'],
-    [name, phone, birthdate, address, input1, input2, input3, sum]
-  ];
-
-  var fileName = name.trim() ? name + '.csv' : '이름없음.csv';
-
-  var csvContent = "data:text/csv;charset=utf-8,\uFEFF" + data.map(e => e.join(",")).join("\n");
-  var encodedUri = encodeURI(csvContent);
-  var link = document.createElement("a");
-  link.setAttribute("href", encodedUri);
-  link.setAttribute("download", fileName);
-  document.body.appendChild(link);
-  link.click();
-}
-
-
-  
-    // 숫자 포맷팅 함수
     function formatNumber(number) {
       return new Intl.NumberFormat().format(number);
     }
-  </script>
-  </body>
+</script>
+</body>
 </html>
