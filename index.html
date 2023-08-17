@@ -58,7 +58,7 @@
       font-size: 20px;
       font-weight: bold;
       margin-top: 0;
-      text-align: right; /* 합계 맨 오른쪽 정렬 추가 */
+      text-align: right;
     }
 
     /* 버튼 스타일 */
@@ -71,38 +71,6 @@
       cursor: pointer;
     }
   </style>
-  <script>
-    // 입력값이 변경될 때마다 동적으로 계산하도록 수정
-    function updateCalculations() {
-      var input1 = parseFloat(document.getElementById('input1').value) || 0;
-      var input2 = parseFloat(document.getElementById('input2').value) || 0;
-      var input3 = parseFloat(document.getElementById('input3').value) || 0;
-
-      var result1 = input1 * 4000;
-      var result2 = input2 * 2000;
-      var result3 = input3 * 1000;
-
-      document.getElementById('result1').innerHTML = formatNumber(result1);
-      document.getElementById('result2').innerHTML = formatNumber(result2);
-      document.getElementById('result3').innerHTML = formatNumber(result3);
-
-      var sum = result1 + result2 + result3;
-      document.getElementById('outputSum').innerHTML = formatNumber(sum);
-    }
-
-    // 초기화 버튼 기능 추가
-    function clearInputs() {
-      document.getElementById('input1').value = '';
-      document.getElementById('input2').value = '';
-      document.getElementById('input3').value = '';
-      updateCalculations();
-    }
-
-    // 숫자 포맷팅 함수
-    function formatNumber(number) {
-      return new Intl.NumberFormat().format(number);
-    }
-  </script>
 </head>
 <body>
   <div class="container">
@@ -131,12 +99,110 @@
       <div id="result3"></div>
     </div>
 
+    <!-- 추가된 입력 필드 -->
+    <div class="result-container">
+      <div>
+        <label for="name">이름:</label>
+        <input type="text" id="name">
+      </div>
+    </div>
+    <div class="result-container">
+      <div>
+        <label for="phone">전화번호:</label>
+        <input type="text" id="phone">
+      </div>
+    </div>
+    <div class="result-container">
+      <div>
+        <label for="birthdate">생년월일:</label>
+        <input type="text" id="birthdate">
+      </div>
+    </div>
+    <div class="result-container">
+      <div>
+        <label for="address">주소:</label>
+        <input type="text" id="address">
+      </div>
+    </div>
+
     <div>
       <label class="result-label">합계:</label>
       <span class="outputSum" id="outputSum"></span>
     </div>
 
     <button onclick="clearInputs()">초기화</button>
+    <!-- 추가된 버튼 -->
+    <button onclick="submitData()">제출하기</button>
   </div>
-</body>
+  <script>
+    // 입력값이 변경될 때마다 동적으로 계산하도록 수정
+    function updateCalculations() {
+      var input1 = parseFloat(document.getElementById('input1').value) || 0;
+      var input2 = parseFloat(document.getElementById('input2').value) || 0;
+      var input3 = parseFloat(document.getElementById('input3').value) || 0;
+  
+      var result1 = input1 * 4000;
+      var result2 = input2 * 2000;
+      var result3 = input3 * 1000;
+  
+      document.getElementById('result1').innerHTML = formatNumber(result1);
+      document.getElementById('result2').innerHTML = formatNumber(result2);
+      document.getElementById('result3').innerHTML = formatNumber(result3);
+  
+      var sum = result1 + result2 + result3;
+      document.getElementById('outputSum').innerHTML = formatNumber(sum);
+    }
+  
+    // 초기화 버튼 기능 추가
+    function clearInputs() {
+      document.getElementById('input1').value = '';
+      document.getElementById('input2').value = '';
+      document.getElementById('input3').value = '';
+      document.getElementById('name').value = '';
+      document.getElementById('phone').value = '';
+      document.getElementById('birthdate').value = '';
+      document.getElementById('address').value = '';
+      updateCalculations();
+    }
+  
+    // 제출하기 버튼 기능 추가
+    function submitData() {
+  var input1 = parseFloat(document.getElementById('input1').value) || 0;
+  var input2 = parseFloat(document.getElementById('input2').value) || 0;
+  var input3 = parseFloat(document.getElementById('input3').value) || 0;
+  var name = document.getElementById('name').value;
+  var phone = document.getElementById('phone').value;
+  var birthdate = document.getElementById('birthdate').value;
+  var address = document.getElementById('address').value;
+
+  var result1 = input1 * 4000;
+  var result2 = input2 * 2000;
+  var result3 = input3 * 1000;
+
+  var sum = result1 + result2 + result3;
+
+  var data = [
+    ['이름', '전화번호', '생년월일', '주소', '벽보A4초과', '벽보A4이하', '전단A4이하', '총 가격'],
+    [name, phone, birthdate, address, input1, input2, input3, sum]
+  ];
+
+  var fileName = name.trim() ? name + '.csv' : '이름없음.csv';
+
+  var csvContent = "data:text/csv;charset=utf-8,\uFEFF" + data.map(e => e.join(",")).join("\n");
+  var encodedUri = encodeURI(csvContent);
+  var link = document.createElement("a");
+  link.setAttribute("href", encodedUri);
+  link.setAttribute("download", fileName);
+  document.body.appendChild(link);
+  link.click();
+}
+
+
+  
+    // 숫자 포맷팅 함수
+    function formatNumber(number) {
+      return new Intl.NumberFormat().format(number);
+    }
+  </script>
+  </body>
 </html>
