@@ -110,7 +110,7 @@
     <div class="result-container">
       <div>
         <label for="phone">전화번호:</label>
-        <input type="text" id="phone">
+        <input type="text" id="phone" value="010-">
       </div>
     </div>
     <div class="result-container">
@@ -122,7 +122,7 @@
     <div class="result-container">
       <div>
         <label for="address">주소:</label>
-        <input type="text" id="address">
+        <input type="text" id="address" value="성남시 중원구 ">
       </div>
     </div>
 
@@ -160,9 +160,9 @@
       document.getElementById('input2').value = '';
       document.getElementById('input3').value = '';
       document.getElementById('name').value = '';
-      document.getElementById('phone').value = '';
+      document.getElementById('phone').value = '010';
       document.getElementById('birthdate').value = '';
-      document.getElementById('address').value = '';
+      document.getElementById('address').value = '성남시 중원구 성남동 ';
       updateCalculations();
     }
   
@@ -183,7 +183,7 @@
   var sum = result1 + result2 + result3;
 
   var data = [
-    ['이름', '전화번호', '생년월일', '주소', '벽보A4초과', '벽보A4이하', '전단A4이하', '총 가격'],
+    ['이름', '전화번호', '생년월일', '주소', '벽보A4초과(4000원)', '벽보A4이하(2000원)', '전단A4이하(1000원)', '총 가격'],
     [name, phone, birthdate, address, input1, input2, input3, sum]
   ];
 
