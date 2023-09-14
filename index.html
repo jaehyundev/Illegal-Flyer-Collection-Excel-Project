@@ -91,6 +91,36 @@
 <body>
   <div class="container">
     <h1 style="text-align: center;">전단지 계산기</h1>
+    
+    
+    <div class="result-container">
+      <div>
+          <label for="name">이름:</label>
+          <input type="text" id="name">
+      </div>
+    </div>
+
+    <div class="result-container">
+      <div>
+        <label for="phone">전화번호:</label>
+        <input type="text" id="phone" value="010">
+      </div>
+    </div>
+
+    <div class="result-container">
+      <div>
+        <label for="birthdate">생년월일:</label>
+        <input type="text" id="birthdate">
+      </div>
+    </div>
+    
+    <div class="result-container">
+        <div>
+            <label for="address">주소:</label>
+            <input type="text" id="address" value="성남시 중원구 성남동">
+        </div>
+    </div>
+    
     <div class="result-container">
       <div>
         <label for="input1">벽보A4초과 (4000원)</label>
@@ -117,34 +147,6 @@
 
     <div class="result-container">
       <div>
-        <label for="name">이름:</label>
-        <input type="text" id="name">
-      </div>
-    </div>
-
-    <div class="result-container">
-      <div>
-        <label for="phone">전화번호:</label>
-        <input type="text" id="phone" value="010">
-      </div>
-    </div>
-
-    <div class="result-container">
-      <div>
-        <label for="birthdate">생년월일:</label>
-        <input type="text" id="birthdate">
-      </div>
-    </div>
-
-    <div class="result-container">
-      <div>
-        <label for="address">주소:</label>
-        <input type="text" id="address" value="성남시 중원구 성남동">
-      </div>
-    </div>
-
-    <div class="result-container">
-      <div>
         <label class="result-label">합계:</label>
         <span class="outputSum" id="outputSum"></span>
       </div>
@@ -155,7 +157,7 @@
       <button onclick="submitData()">제출하기</button>
       <button onclick="downloadCSV()">다운로드</button>
     </div>
-    <p id="submitMessage" style="text-align: center; display: none;">제출완료</p>
+    <p id="submitMessage" style="text-align: center; display: none;">!!!!! 제출완료 !!!!!</p>
   </div>
   <script>
     var savedData = [];
@@ -237,10 +239,11 @@
 
     function submitData() {
       saveData();
+      downloadCSV();
       document.getElementById('submitMessage').style.display = 'block';
       setTimeout(function() {
         document.getElementById('submitMessage').style.display = 'none';
-      }, 1000);
+      }, 2000);
     }
 
     function formatNumber(number) {
